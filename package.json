@@ -41,7 +41,7 @@
     "instrument": true
   },
   "dependencies": {
-    "cucumber-html-reporter": "^3.0.4",
+    "cucumber-html-reporter": "^4.0.0",
     "graphql": "0.12.3"
   },
   "devDependencies": {

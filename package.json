@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "cucumber-html-reporter": "^3.0.4",
-    "graphql": "0.12.3"
+    "graphql": "0.13.0"
   },
   "devDependencies": {
     "@types/cucumber": "3.2.2",

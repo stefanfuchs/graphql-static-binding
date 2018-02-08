@@ -45,11 +45,11 @@
     "graphql": "0.12.3"
   },
   "devDependencies": {
-    "@types/cucumber": "3.2.2",
+    "@types/cucumber": "4.0.0",
     "@types/graphql": "0.12.3",
     "@types/node": "9.4.3",
     "coveralls": "3.0.0",
-    "cucumber": "3.2.1",
+    "cucumber": "4.0.0",
     "nyc": "11.4.1",
     "semantic-release": "12.4.1",
     "ts-node": "4.1.0",

@@ -43,7 +43,8 @@ const scalarMapping = {
 }
 
 function renderHeader(schema: string): string {
-  return `import { Graphcool as BaseGraphcool, BaseGraphcoolOptions } from 'graphcool-binding'
+  return `//@flow
+import { Graphcool as BaseGraphcool, BaseGraphcoolOptions } from 'graphcool-binding'
 import { GraphQLResolveInfo } from 'graphql'
 
 const typeDefs = \`
@@ -174,7 +175,7 @@ function renderRootType(type: GraphQLObjectType): string {
         !isNonNullType(field.type) ? ' | null' : ''
       }>`
     })
-    .join('\n')
+    .join(',\n')
 
   return renderTypeWrapper(type.name, type.description, fieldDefinition)
 }
@@ -189,7 +190,7 @@ function renderSubscriptionType(type: GraphQLObjectType): string {
         field.args.length > 0 ? ' ' : ''
       }}, infoOrQuery?: GraphQLResolveInfo | string) => Promise<AsyncIterator<${renderFieldType(field.type)}>>`
     })
-    .join('\n')
+    .join(',\n')
 
   return renderTypeWrapper(type.name, type.description, fieldDefinition)
 }
@@ -209,7 +210,7 @@ function renderObjectType(
       const field = type.getFields()[f]
       return `  ${renderFieldName(field)}: ${renderFieldType(field.type)}`
     })
-    .join('\n')
+    .join(',\n')
 
   let interfaces: GraphQLInterfaceType[] = []
   if (type instanceof GraphQLObjectType) {
@@ -227,7 +228,7 @@ function renderInputObjectType(
       const field = type.getFields()[f]
       return `  ${renderFieldName(field)}: ${renderInputFieldType(field.type)}`
     })
-    .join('\n')
+    .join(',\n')
 
   let interfaces: GraphQLInterfaceType[] = []
   if (type instanceof GraphQLObjectType) {
@@ -267,16 +268,16 @@ function renderSchemaInterface(
   mutationType?: GraphQLObjectType | null,
   subscriptionType?: GraphQLObjectType | null
 ) {
-  return `export type Schema {
-  query: ${queryType.name}
+  return `export type Schema = {
+  query: ${queryType.name},
 ${
     mutationType
-      ? `  mutation: ${mutationType.name}
+      ? `  mutation: ${mutationType.name},
 `
       : ''
   }${
     subscriptionType
-      ? `  subscription: ${subscriptionType.name}
+      ? `  subscription: ${subscriptionType.name},
 `
       : ''
   }}`
@@ -289,8 +290,9 @@ function renderInterfaceWrapper(
   fieldDefinition: string
 ): string {
   return `${renderDescription(typeDescription)}export type ${typeName}${
-    interfaces.length > 0 ? ` extends ${interfaces.map(i => i.name).join(', ')}` : ''
-  } {
+    ''
+    //interfaces.length > 0 ? ` extends ${interfaces.map(i => i.name).join(', ')}` : ''
+  } = {
 ${fieldDefinition}
 }`
 }
